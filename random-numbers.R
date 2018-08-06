@@ -57,3 +57,20 @@ plot(lattice_1[1:100,], lattice_1[2:101,1])
 
 #2.16 implemente os testes de independencia (Gaps, runs e permutações) 
 #e uniformidade:
+#usando alpha = .4 e beta = .6
+expected <- matrix(nrow = 6, ncol = 3)
+
+for(i in c(3:6)){
+expected[i,1] <- i + 2
+expected[i,2] <- dgeom(x = i + 2, prob = .2)
+expected[i,3] <- dgeom(x = i + 2, prob = .2)*12
+expected[2,1] <- 1
+expected[2,2] <- dgeom(x = 1, prob = .2)
+expected[2,3] <- dgeom(x = 1, prob = .2)*12
+expected[1,1] <- 0
+expected[1,2] <- dgeom(x = 0, prob = .2)
+expected[1,3] <- dgeom(x = 0, prob = .2)*12
+}
+chi <- cbind(expected, c(3,4,1,1,2,1))
+stat <- sum((chi[,4] - chi[,3])^2 / chi[,3])
+1-pchisq(q = stat, df = 5)
